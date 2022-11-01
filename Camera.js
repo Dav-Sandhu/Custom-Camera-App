@@ -3,12 +3,19 @@ import { Camera } from "expo-camera"
 import { Entypo } from "@expo/vector-icons"
 import React from "react"
 
-const CameraElement = ({type, flash, flip, dispatch}, ref) => {
+const CameraElement = ({type, flash, flip, dispatch, pending, autoFocus}, ref) => {
 
   const takePicture = async () => {
     if (ref) {
       try{
-        const data = await ref.current.takePictureAsync()
+        dispatch({
+          type: "pending",
+          payload: ""
+        })
+
+        const options = { quality: 1, base64: true, skipProcessing: true }
+        const data = await ref.current.takePictureAsync(options)
+
         dispatch({
           type: "image",
           payload: data.uri
@@ -25,6 +32,7 @@ const CameraElement = ({type, flash, flip, dispatch}, ref) => {
         style={styles.camera}
         type={type}
         flashMode={flash}
+        autoFocus={autoFocus}
         ref={ref}
       >
         <TouchableOpacity
@@ -40,14 +48,17 @@ const CameraElement = ({type, flash, flip, dispatch}, ref) => {
               payload: payload
             })
           }} 
-          style={styles.flipButton}>
+          style={styles.flipButton}
+          disabled={pending}>
             <Text>Flip</Text>
         </TouchableOpacity>
+        {pending ? <Text view={styles.loading}>Loading...</Text> : null}
       </Camera> 
       <View style={styles.cameraDrawer}>
         <TouchableOpacity
           onPress={takePicture}
-          style={styles.cameraButton}>
+          style={styles.cameraButton}
+          disabled={pending}>
           <Entypo 
             style={styles.icons}
             name="camera"/>
@@ -62,6 +73,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+  loading: {
+    color: "#FFFFFF",
+    fontSize: 25,
+    width: "100%",
+    borderColor: "#000000",
+    borderHeight: 500,
+    borderWidth: 500,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000000",
+    textShadowColor: "#000000",
+    textShadowOffset: 1
   },
   camera: {
     flex: 5,

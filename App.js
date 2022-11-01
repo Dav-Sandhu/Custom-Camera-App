@@ -28,6 +28,9 @@ const reducer = (state, {type, payload}) => {
 
       return {...state, flash: Camera.Constants.FlashMode.off}
 
+    case "pending":
+      return {...state, pending: !state.pending}
+
     default:
       return state
   }
@@ -39,7 +42,9 @@ export default function App() {
     image: "",
     flip: "front",
     type: CameraType.front,
-    flash: Camera.Constants.FlashMode.on
+    autoFocus: Camera.Constants.AutoFocus.off,
+    flash: Camera.Constants.FlashMode.off,
+    pending: false
   })
 
   const getPermissions = async () => {
@@ -68,12 +73,15 @@ export default function App() {
           type={state.type}
           flash={state.flash}
           flip={state.flip}
-          dispatch={dispatch} /> 
+          dispatch={dispatch}
+          pending={state.pending}
+          autoFocus={state.autoFocus} /> 
         : 
         <Picture 
           image={state.image}
           dispatch={dispatch}
-          MediaLibrary={MediaLibrary} />
+          MediaLibrary={MediaLibrary}
+          pending={state.pending} />
       }
     </>
   );

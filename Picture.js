@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, View, Image, StyleSheet, PixelRatio } from "react-native"
 
-const Picture = ({image, dispatch, MediaLibrary}) => {
+const Picture = ({image, dispatch, MediaLibrary, pending}) => {
   return(
     <View style={styles.container}> 
       <Image 
@@ -23,6 +23,11 @@ const Picture = ({image, dispatch, MediaLibrary}) => {
         <TouchableOpacity
           style={styles.retakeButton}
           onPress={() => {
+            dispatch({
+              type: "pending",
+              payload: ""
+            })
+             
             dispatch({
               type: "image",
               payload: ""
