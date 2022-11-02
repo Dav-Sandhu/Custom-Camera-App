@@ -80,8 +80,7 @@ export default function App() {
         <Picture 
           image={state.image}
           dispatch={dispatch}
-          MediaLibrary={MediaLibrary}
-          pending={state.pending} />
+          MediaLibrary={MediaLibrary} />
       }
     </>
   );

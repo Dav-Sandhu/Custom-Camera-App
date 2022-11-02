@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, View, Image, StyleSheet, PixelRatio } from "react-native"
 
-const Picture = ({image, dispatch, MediaLibrary, pending}) => {
+const Picture = ({image, dispatch, MediaLibrary}) => {
   return(
     <View style={styles.container}> 
       <Image 
@@ -18,7 +18,7 @@ const Picture = ({image, dispatch, MediaLibrary, pending}) => {
               })
             })
           }}>
-            <Text>SAVE</Text>  
+            <Text style={styles.buttonText}>SAVE</Text>  
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.retakeButton}
@@ -34,7 +34,7 @@ const Picture = ({image, dispatch, MediaLibrary, pending}) => {
             })
           }}
         >
-          <Text>RETAKE</Text>
+          <Text style={styles.buttonText}>RETAKE</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+  buttonText: {
+    fontSize: 25 / PixelRatio.getFontScale()
   },
   image: {
     flex: 5,
