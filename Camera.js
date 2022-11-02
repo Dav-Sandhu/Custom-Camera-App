@@ -2,6 +2,7 @@ import { TouchableOpacity, Text, View, StyleSheet, PixelRatio } from "react-nati
 import { Camera } from "expo-camera"
 import { Entypo } from "@expo/vector-icons"
 import React from "react"
+import { StatusBar } from "expo-status-bar"
 
 const CameraElement = ({type, flash, flip, dispatch, pending, autoFocus}, ref) => {
 
@@ -28,6 +29,9 @@ const CameraElement = ({type, flash, flip, dispatch, pending, autoFocus}, ref) =
 
   return(
     <View style={styles.container}> 
+      <StatusBar 
+        hidden={true}
+      />
       <Camera 
         style={styles.camera}
         type={type}
@@ -50,7 +54,7 @@ const CameraElement = ({type, flash, flip, dispatch, pending, autoFocus}, ref) =
           }} 
           style={styles.flipButton}
           disabled={pending}>
-            <Text>Flip</Text>
+            <Text style={styles.flipButtonText}>Flip</Text>
         </TouchableOpacity>
         {pending ? <Text view={styles.loading}>Loading...</Text> : null}
       </Camera> 
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
   },
   loading: {
     color: "#FFFFFF",
-    fontSize: 25,
+    fontSize: 25 / PixelRatio.getFontScale(),
     width: "100%",
     borderColor: "#000000",
     borderHeight: 500,
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
   },
   icons: {
     color: "#000000",
-    fontSize: 25
+    fontSize: 30 / PixelRatio.getFontScale()
   },
   flipButton: {
     width: "25%",
@@ -113,6 +117,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     opacity: 0.5
+  },
+  flipButtonText: {
+    fontSize: 20 / PixelRatio.getFontScale()
   },
   cameraButton: {
     justifyContent: "center",
